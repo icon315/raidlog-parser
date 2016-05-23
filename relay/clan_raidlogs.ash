@@ -17,6 +17,7 @@ int runType=-1;
 boolean activeComment=false;//uncomment next line for testing.
 activeComment=true;
 string clearID="!Made it<br>Through";
+string my_name = my_name().to_lower_case();
 string[string,string] theMatcher;
 
 theMatcher["Parts",".place"]="3&action=talkrichard&whichtalk=3";
@@ -383,8 +384,8 @@ string pullField(int[string,string] fakeField, string fName){
 string getName(string l){
  matcher m=create_matcher("(?:<b>)?([\\w\\s_]+) \\(#(\\d+)\\)",l);
  if(!m.find())return ".";
- data[".data",".id",m.group(1)]=m.group(2).to_int();
- return m.group(1);
+ data[".data",".id",m.group(1).to_lower_case()]=m.group(2).to_int();
+ return m.group(1).to_lower_case();
 }
 
 int getTurns(string l){
@@ -802,7 +803,7 @@ void formatDreadOptions(){
   zone=m.group(1);
   nc=m.group(2);
   menu=nc.noSpaces()+"td";
-  if(data[my_name(),zone,"+"+nc]%10!=0){
+  if(data[my_name,zone,"+"+nc]%10!=0){
    contexts[menu]+='"done": {name: "You\'ve already adventured here!", disabled: true}';
    continue;
   }
@@ -1341,7 +1342,7 @@ void pageHeader(){
  writeln("function openContext(e,d){var div=document.getElementById('context'+d); div.style.display='inline'; div.style.position='absolute'; div.style.top=e.clientY+2; div.style.left=e.clientX; div.style.overflowy='auto';}");
  writeln("function updateTots(area){var td=document.getElementById(area+\"Ps\"); var allIs=document.getElementById(area+\"Table\").getElementsByTagName(\"input\"); var t=0; for(i=0;i<allIs.length;i++){ t=t+Number(allIs[i].value); } td.innerHTML=t;}</script>");
  int i=page.index_of("</head>");
- matcher m=create_matcher("(//images\\.kingdomofloathing\\.com|images)/scripts/jquery.+?js",page.substring(12,i));
+ matcher m=create_matcher("(https://s3\\.amazonaws\\.com/images\\.kingdomofloathing\\.com|images)/scripts/jquery.+?js",page.substring(12,i));
  if(m.find())write(m.replace_first("jquery-1.10.2.min.js"));
  writeln("<link rel=\"stylesheet\" type=\"text/css\" href=\"jquery.contextMenu.css\">");
  writeln("<script type='text/javascript' src=\"jquery.contextMenu.js\"></script>");
@@ -1489,7 +1490,7 @@ void formatHB(string show){
  }
  sort odata by (value["Sewer",clearID]==0?5000:0)-value[".hobo",".rtotal"];
  foreach index in odata{//Full Area Table Data
-  write("<tr class=\"rowD"+(odata[index].pullField(".name")==my_name()?" HL":"")+"\"><td class=\"TSO\" style=\"text-align:left\">"+linkify(odata[index].pullField(".name"))+"</td>");
+  write("<tr class=\"rowD"+(odata[index].pullField(".name").to_lower_case()==my_name?" HL":"")+"\"><td class=\"TSO\" style=\"text-align:left\">"+linkify(odata[index].pullField(".name"))+"</td>");
   foreach s in $strings[Sewer,TS,BB,EE,Heap,AHBG,PLD]{
    if(data[".data",s,".hasdata"]==-1)continue;
    write("<td class=\""+s+"O\">"+odata[index,s,".total"]+"</td>");
@@ -1542,7 +1543,7 @@ void formatHB(string show){
   }
   sort odata by (area=="Sewer"?(1-value["Sewer",clearID])*5000-value[area,".total"]:-value[area,".total"]);
   foreach index in odata{//per-area table data
-   write("<tr class=\"rowD"+(odata[index].pullField(".name")==my_name()?" HL":"")+"\"><td class=\""+area+"O\" style=\"text-align:left\">");
+   write("<tr class=\"rowD"+(odata[index].pullField(".name").to_lower_case()==my_name?" HL":"")+"\"><td class=\""+area+"O\" style=\"text-align:left\">");
    write(linkify(odata[index].pullField(".name"))+((area=="Sewer")&&(odata[index,"Sewer",clearID]>0)?" <span class=\"clear\">(Clear"+(odata[index,"Sewer",clearID]>1?" x"+odata[index,"Sewer",clearID]:"")+")</span>":"")+(odata[index,area,"!"+area.bossName()]>0?" <span class=\"bossKiller\">(Boss)</span>":"")+"</td>");
    foreach s in theMatcher[area]{//per-area table data
     if(".!".contains_text(s.char_at(0)))continue;
@@ -1616,7 +1617,7 @@ void formatST(string show){
  }
  sort odata by -value["Slime",".rtotal"];
  foreach index in odata{//slime table rows
-  write("<tr class=\"rowD"+(odata[index].pullField(".name")==my_name()?" HL":"")+"\"><td class=\"SlimeO\" style=\"text-align:left\">"+linkify(odata[index].pullField(".name"))+"</td>");
+  write("<tr class=\"rowD"+(odata[index].pullField(".name").to_lower_case()==my_name?" HL":"")+"\"><td class=\"SlimeO\" style=\"text-align:left\">"+linkify(odata[index].pullField(".name"))+"</td>");
   foreach s in theMatcher["Slime"]{
    if(".!".contains_text(s.char_at(0)))continue;
    if((data[".stotal","Slime",s]<1)&&((s!="Defeats")||data[".stotal","Slime","!bossloss"]<1))continue;
@@ -1711,7 +1712,7 @@ void formatHH(string show){
  else write("</tr>");
  foreach index in odata{//haunted table rows
   if(index==count(odata)-1)break;
-  write("<tr class=\"rowD"+(odata[index].pullField(".name")==my_name()?" HL":"")+"\"><td class=\"HauntedO\" style=\"text-align:left\">"+linkify(odata[index].pullField(".name"))+(odata[index,"Haunted","!Necbromancer"]>0?" ("+odata[index,"Haunted","!Necbromancer"]+")":"")+(odata[index,"Haunted","!Guides"]>0?" (G)":"")+"</td>");
+  write("<tr class=\"rowD"+(odata[index].pullField(".name").to_lower_case()==my_name?" HL":"")+"\"><td class=\"HauntedO\" style=\"text-align:left\">"+linkify(odata[index].pullField(".name"))+(odata[index,"Haunted","!Necbromancer"]>0?" ("+odata[index,"Haunted","!Necbromancer"]+")":"")+(odata[index,"Haunted","!Guides"]>0?" (G)":"")+"</td>");
   foreach s in odata[count(odata)-1,"Haunted"]{
    if(".!".contains_text(s.char_at(0)))continue;
    if((odata[count(odata)-1,"Haunted",s]==0)&&(s.char_at(0)!="&")&&((s!="Defeats")||data[".htotal","Haunted","!bossloss"]<1))continue;
@@ -1904,7 +1905,7 @@ void formatDread(string show){
  }
  sort odata by -value[".dread",".rtotal"];
  foreach index in odata{
-  write("<tr class=\"rowD"+(odata[index].pullField(".name")==my_name()?" HL":"")+"\"><td class=\"TSO\" style=\"text-align:left\">");
+  write("<tr class=\"rowD"+(odata[index].pullField(".name").to_lower_case()==my_name?" HL":"")+"\"><td class=\"TSO\" style=\"text-align:left\">");
   write(linkify(odata[index].pullField(".name"))+"</td>");
   foreach area in $strings[DreadWoods, DreadVillage, DreadCastle] if(data[".dtotal",area,".total"]>0)write("<td class=\""+area+"O\">"+odata[index,area,".total"]+"</td>");
   write("<td class=\"TSO\">"+odata[index,".dread",".total"]+"</td>");
@@ -1962,7 +1963,7 @@ void formatDread(string show){
   }
   sort odata by -value[area,".total"];
   foreach index in odata{//per-area table data
-   write("<tr class=\"rowD"+(odata[index].pullField(".name")==my_name()?" HL":"")+"\"><td class=\""+area+"O\" style=\"text-align:left\">");
+   write("<tr class=\"rowD"+(odata[index].pullField(".name").to_lower_case()==my_name?" HL":"")+"\"><td class=\""+area+"O\" style=\"text-align:left\">");
    write(linkify(odata[index].pullField(".name")));
    for i from 1 upto odata[index,area,".unlock"] write(" <span style=\"color:gold\">&#9733;</span>");
    write((odata[index,area,"!Boss"]>0?" <span class=\"bossKiller\">(Boss)</span>":"")+"</td>");
