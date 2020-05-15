@@ -120,7 +120,7 @@ theMatcher["PLD","&nbsp;Sleaze Hobo"] = "defeated  Sleaze hobo";
 theMatcher["PLD","Defeats"] = "defeated by  Sleaze";
 theMatcher["PLD","!Chester"] = "defeated  Chester";
 theMatcher["PLD","!bossloss"] = "defeated by  Chester";
-theMatcher["PLD","Raided<br>Dumstpers"] = "dumpster";
+theMatcher["PLD","Raided<br>Dumpsters"] = "dumpster";
 theMatcher["PLD","Sent Trash"] = "sent some trash";
 theMatcher["PLD","Bamboozled"] = "bamboozled";
 theMatcher["PLD","Flimflammed"] = "flimflammed";
@@ -452,7 +452,7 @@ void parseHB(string hobo) {
 			data[".total","TS",".total"] += t;
 			data[".total",".hobo",".total"] += t;
 			break;
-		}  
+		}
 	} else {
 		data[".data","TS",".hasdata"] = -1;
 	}
@@ -825,7 +825,7 @@ void formatDreadOptions() {
 			(("Great Hall Tower Dungeon".contains_text(nc))&&(data[".data","Dread",".carriage"]<2000)) ) {
 				contexts[menu] += '"done": {name: "The carriageman isn\'t drunk enough to bring you here.", disabled: true}';
 				continue;
-		}  
+		}
 		if(data[".data",".pencil",nc] == 1) {
 			boolean empty = true;
 			boolean first = true;
@@ -1124,7 +1124,7 @@ void parseDread(string dread) {
 					if(!nc.find())abort("No.");
 					pn = nc.group(1);
 					t = 0;
-					if(dreadNonComStr(pn,nc.group(2).to_int()) == "Trap Door Item") {       
+					if(dreadNonComStr(pn,nc.group(2).to_int()) == "Trap Door Item") {
 						data[".data",".hung",w] = 1;
 						data[w,"DreadCastle",".hung"] = 1;
 					} else if(dreadNonComStr(pn,nc.group(2).to_int()) == "Pulled Lever") {
@@ -1146,11 +1146,11 @@ void parseDread(string dread) {
 						data[".dtotal",".dread",".total"] += 1;
 						data[".data","Dread"+zone,pn+"."+dreadNonComStr(pn,nc.group(2).to_int())] += 1;
 						switch(dreadNonComStr(pn,nc.group(2).to_int())) {
-						case "-Hot":data[".data","Dread"+zone,".hot"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
-						case "-Spooky":data[".data","Dread"+zone,".spooky"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
-						case "-Stench":data[".data","Dread"+zone,".stench"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
-						case "-Cold":data[".data","Dread"+zone,".cold"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
-						case "-Sleaze":data[".data","Dread"+zone,".sleaze"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
+						case "-Hot":data[".data","Dread"+zone,".Hot"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
+						case "-Spooky":data[".data","Dread"+zone,".Spooky"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
+						case "-Stench":data[".data","Dread"+zone,".Stench"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
+						case "-Cold":data[".data","Dread"+zone,".Cold"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
+						case "-Sleaze":data[".data","Dread"+zone,".Sleaze"] = -1;data[".data","Dread"+zone,".kisses"] += 1; break;
 						case "-Bugbears":data[".data","DreadWoods",".tilt"] -= 1; break;
 						case "-Werewolves":data[".data","DreadWoods",".tilt"] += 1; break;
 						case "-Ghosts":data[".data","DreadVillage",".tilt"] -= 1; break;
@@ -1255,7 +1255,7 @@ void pageHeader() {
 		Odd rows: use rowD, [element]O
 		Even rows: use rowD
 		Totals: use rowD, [element]I
-		
+
 		T-comes from table
 		O-comes from shaded
 		I-comes from header/totals
@@ -1324,20 +1324,20 @@ void pageHeader() {
 	writeln(".HauntedT{border-color:#FFA500;}");
 	writeln(".HauntedI{font-weight:bold;color:white;background-color:#101010;}");
 	writeln(".HauntedO{background-color:#FFA500;}");
-	
-	
+
+
 	writeln(".DreadCastleC{color:#303030;}");
 	writeln(".DreadCastleT{border-color:#CFB53B;}");
 	writeln(".DreadCastleI{font-weight:bold;color:white;background-color:#303030;}");
 	writeln(".DreadCastleO{background-color:#B0B0B0;}");
 	writeln(".DreadCastleE{background-color:#C8C8C8;}");
-	
+
 	writeln(".DreadVillageC{color:#98790C;}");
 	writeln(".DreadVillageT{border-color:brown;}");
 	writeln(".DreadVillageI{font-weight:bold;color:white;background-color:#98790C;}");
 	writeln(".DreadVillageO{background-color:#D7CAA6;}");
 	writeln(".DreadVillageE{background-color:#FFF1C5;}");
-	
+
 	writeln(".DreadWoodsC{color:#254117;}");
 	writeln(".DreadWoodsT{border-color:#green;}");
 	writeln(".DreadWoodsI{font-weight:bold;color:white;background-color:#254117;}");
@@ -1352,7 +1352,9 @@ void pageHeader() {
 	writeln("function hideAll() {['Hobo','Slime','Haunted','Dread'].forEach(function(name) {var i1=document.getElementById(name+'Tab'); if(i1 == null) return; i1.style.textDecoration='underline'; i1.style.cursor='pointer'; i1=document.getElementById(name+'Div'); if(i1 == null) return; i1.style.display='none';});}");
 	writeln("function show(e) {hideAll(); var sub=new XMLHttpRequest; sub.open('GET','KoLmafia/sideCommand?cmd=set+raidlogStartPage='+e+'&pwd="+my_hash()+"'); sub.send(); var i1=document.getElementById(e+'Div'); i1.style.display='inline'; i1=document.getElementById(e+'Tab'); i1.style.textDecoration='none'; i1.style.cursor='default';}");
 	writeln("function openContext(e,d) {var div=document.getElementById('context'+d); div.style.display='inline'; div.style.position='absolute'; div.style.top=e.clientY+2; div.style.left=e.clientX; div.style.overflowy='auto';}");
-	writeln("function updateTots(area) {var td=document.getElementById(area+\"Ps\"); var allIs=document.getElementById(area+\"Table\").getElementsByTagName(\"input\"); var t=0; for(i=0;i<allIs.length;i++) { t=t+Number(allIs[i].value); } td.innerHTML=t;}</script>");
+    writeln("function updateTots(area) {var td=document.getElementById(area+\"Ps\"); var allIs=document.getElementById(area+\"Table\").getElementsByClassName(\"ptstot\");  var t=0; for(i=0;i<allIs.length;i++) { t=t+Number(allIs[i].value); } td.innerHTML=t;}");
+    writeln("function updateTotsDrops(area) {var td=document.getElementById(area+\"Ps\"); var allIs=document.getElementById(area+\"Table\").getElementsByTagName(\"input\");  var t=0; for(i=0;i<allIs.length;i++) { t=t+Number(allIs[i].value); } td.innerHTML=t;}");
+	writeln("function updateTotsPts(x, user) {  var i = x.value; console.log(\"u.\"+user); var td = document.getElementsByName(\"u.\"+user); console.log(td[0]); td[0].value = Number(td[0].defaultValue) + (i * 40)}</script>");
 	int i = page.index_of("</head>");
 	matcher m = create_matcher("(https://s3\\.amazonaws\\.com/images\\.kingdomofloathing\\.com|images)/scripts/jquery.+?js",page.substring(12,i));
 	if(m.find())write(m.replace_first("jquery-1.10.2.min.js"));
@@ -1497,7 +1499,7 @@ void formatHB(string show) {
 			}
 			if(options["hobo.sewersMatter"] == "on")tmp -= data[user,"Sewer","Defeats"];
 		}
-		if(options["hobo.sewersMatter"] == "n")tmp -= data[user,"Sewer",".total"];  
+		if(options["hobo.sewersMatter"] == "n")tmp -= data[user,"Sewer",".total"];
 		odata[count(odata)-1,".hobo",".rtotal"] = tmp;
 	}
 	sort odata by (value["Sewer",clearID] == 0?5000:0)-value[".hobo",".rtotal"];
@@ -1532,7 +1534,7 @@ void formatHB(string show) {
 			}
 			if(options["hobo.sewersMatter"] == "on")tmp -= data[".total","Sewer","Defeats"];
 		}
-		if(options["hobo.sewersMatter"] == "n")tmp -= data[".total","Sewer",".total"];  
+		if(options["hobo.sewersMatter"] == "n")tmp -= data[".total","Sewer",".total"];
 		write("<td class=\"TSI\">"+tmp+"</td>");
 	}
 	writeln("</tr></tfoot></table></div></center></td></tr></table><br>");
@@ -1603,7 +1605,7 @@ void formatST(string show) {
 		}
 		break;
 	default:
-		write(data[".data","Slime",".image"]+"0% Complete");  
+		write(data[".data","Slime",".image"]+"0% Complete");
 	}
 	write("</td></tr></table></td><td width=\"100%\"><table class=\"tableD SlimeT\"><tr class=\"rowD\"><td class=\"SlimeI\" onclick='tog(SlimeTable);'>Slime Tube</td></tr><tr><td><center><div id=\"SlimeTable\" style=\"display:inline;\">");
 	write("<table class=\"sortable tableD SlimeT\"><tr class=\"rowD\"><th class=\"SlimeO\">Players</th>");
@@ -2129,7 +2131,11 @@ void lootManager() {
 }
 
 void conMan1() {
+	int[string] kills;
 	int[string] points;
+	int[string] tasks;
+	string[string] taskstring;
+    write("<table cellpadding=\"3\" cellspacing=\"0\" border=\"1px\" class=\"sortable mw-collapsible mw-collapsed\">");
 	foreach user in data {
 		if(user.char_at(0) == ".") continue;
 		foreach area in $strings[Sewer,TS,BB,EE,Heap,AHBG,PLD] {
@@ -2141,38 +2147,106 @@ void conMan1() {
 				}
 				if(area == "Sewer") {
 					if((options["hobo.sewersMatter"] == "n")&&(thing != "Opened<br>Grates")&&(thing != "Turned<br>Valves")) continue;
+
 				}
 				if((options["hobo.marketMatter"] == "n")&&(thing == "Market<br>Trips")) continue;
 				if((options["hobo.richardMatter"] == "n")&&(thing.substring(0,5) == "Made<")) continue;
+                if((thing == "&nbsp;Normal Hobo") ||
+                (thing == "&nbsp;Hot Hobo") ||
+                (thing == "&nbsp;Cold Hobo") ||
+                (thing == "&nbsp;Stench Hobo") ||
+                (thing == "&nbsp;Spooky Hobo") ||
+                (thing == "&nbsp;Sleaze Hobo"))
+                {
+
+                    kills[user] += val;
+                    kills[".t"] += val;
+                }
+                else if(thing == "Opened<br>Grates")
+                {
+                    taskstring[user] += thing+"x"+val+"(10p/e)["+val * 40+"], ";
+                    val = val * 40;
+                    tasks[user] += val;
+                }
+                else if(thing == "Turned<br>Valves")
+                {
+                    taskstring[user] += thing+"x"+val+"(10p/e)["+val * 10+"], ";
+                    val = val * 10;
+                    tasks[user] += val;
+                }
+                else if(thing == "Threw Tire")
+                {
+                    taskstring[user] += thing+"x"+val+"(10p/e)["+val * 10+"], ";
+                    val = val * 10;
+                    tasks[user] += val;
+                }
+                else if(thing == "Sent<br>Compost")
+                {
+                    taskstring[user] += thing+"x"+val+"(10p/e)["+val * 2+"], ";
+                    val = val * 2;
+                    tasks[user] += val;
+                }
+                else if(thing == "Pipes Busted")
+                {
+                    taskstring[user] += thing+"x"+val+"(10p/e)["+val * 2+"], ";
+                    val = val * 2;
+                    tasks[user] += val;
+                }
+                else if(thing == "Barfights")
+                {
+                    taskstring[user] += thing+"x"+val+"(10p/e)["+val * 4+"], ";
+                    val = val * 4;
+                    tasks[user] += val;
+                }
+                else if(thing == "Raided Tombs")
+                {
+                    taskstring[user] += thing+"x"+val+"(10p/e)["+val * 5+"], ";
+                    val = val * 5;
+                    tasks[user] += val;
+                }
+                else
+                    val = 0;
 				points[user] += val;
 				points[".t"] += val;
 			}
 		}
 	}
-	
 	write("<form name=\"conman\" action=\""+__FILE__+"?conman=2\" method=\"POST\">");
 	write("<table><tr><td valign=\"top\"><table id=\"dropTable\"><tr><th colspan=2>Drops</th></tr>");
 	//3,3,3,2,2,1...
 	foreach i in $strings[Sliders,Pickle Juice,Banquets,Blankets,Hodge Stew,Forks,Mugs,Snuff] {
-		write("<tr><td>"+i+"</td><td><input name=\"i."+i+"\" type=\"text\" value=\"0\" onchange=\"updateTots('drop');\"></td></tr>");
+		write("<tr><td>"+i+"</td><td><input name=\"i."+i+"\" type=\"text\" value=\"0\" onchange=\"updateTotsDrops('drop');\"></td></tr>");
 	}
 	write("<tr><td>Total Items:</td><td><span id=\"dropPs\">0</span></td></tr>");
 	write("</table></td><td valign=\"top\"><table id=\"userTable\"><tr><th colspan=2>Player Data</th></tr>");
+	write("<tr><th>Username</th><th>Points</th><th>Kills</th><th>Banquets(40p/e)</th><th>Tasks</th></tr>");
 	foreach user,p in points{
 		if(user == ".t") continue;
-		write("<tr><td>"+user+"</td><td><input name=\"u."+user+"\" type=\"text\" value=\""+p+"\" onchange=\"updateTots('user');\"></td></tr>");
+        buffer taskcomp = taskstring[user].replace_string("<br>", " ");
+		write("<tr><td>"+user+"</td><td><input class=\"ptstot\" style=\"width:90\" name=\"u."+user+"\" type=\"text\" value=\""+p+"\"></td>"+
+        "<td><input style=\"width:90\" name=\"k."+user+"\" type=\"text\" value=\""+kills[user]+"\"></td>"+
+        "<td><input style=\"width:90\" name=\"b."+user+"\" type=\"text\" value=\"0\" onchange=\"updateTotsPts(this, '"+user+"');updateTots('user')\"></td>"+
+        "<td><input style=\"width:90\" width=\"30\"  name=\"t."+user+"\" type=\"text\" value=\""+tasks[user]+"\"></td><td style=\"font-size:10\">"+
+        (length(taskcomp) == 0 ? "" : (substring(taskcomp,0, (length(taskcomp)-2))))+"</td></tr>");
 	}
-	write("<tr><td>Total Points</td><td><span id=\"userPs\">"+points[".t"]+"</span></td></tr>");
+	write("<tr><td>Total Points</td><td><span id=\"userPs\">"+points[".t"]+"</span></td><td>Total Kills</td><td><span id=\"userKs\">"+kills[".t"]+"</span></td></tr>");
 	write("</table></td></tr><tr><td colspan=2><input type=\"Submit\" value=\"Submit\"></td></tr></table></form>");
 }
 
 void conMan2() {
 	int[string] drops;
 	int[string] usersT;
-	foreach d,s in FF switch(d.char_at(0)) {
-		case "i":drops[d.substring(2)] += s.to_int(); break;
-		case "u":if(s.to_int() != 0)usersT[d.substring(2)] += s.to_int(); break;
-	}
+    print(FF.count());
+	foreach d,s in FF
+    {
+        switch(d.char_at(0)) 
+        {
+		case "i":
+            drops[d.substring(2)] += s.to_int(); break;
+		case "u":
+            if(s.to_int() != 0)usersT[d.substring(2)] += s.to_int(); break;
+        }
+    }
 	int dv = 0;
 	int pv = 0;
 	foreach s,v in usersT pv += v;
@@ -2185,6 +2259,8 @@ void conMan2() {
 		int[string] drops;
 	} [int] users;
 	foreach n,p in usersT{
+        print(n);
+        print( floor(p*1.0*dv/pv));
 		users[count(users)+1].name = n;
 		users[count(users)].points = floor(p*1.0*dv/pv);
 	}
@@ -2228,7 +2304,7 @@ void conMan2() {
 				if(users[token].points >= VoD) {
 					users[token].drops[thing] += 1;
 					users[token].points -= VoD;
-					drops[thing] -= 1;    
+					drops[thing] -= 1;
 				} else {
 					users[passback+1].drops[thing] += drops[thing];
 					drops[thing] = 0;
@@ -2274,7 +2350,7 @@ void conMan3() {
 	remove stuff[".Extra"];
 	boolean[string] check;
 	foreach u,i,a in stuff if(a == 0)remove stuff[u,i];
-	foreach u in stuff if(kmail(u,"",0,stuff[u]) == 1) {
+	foreach u in stuff if(kmail(u,"Here's your share of the hobopolis loot",0,stuff[u]) == 1) {
 		check[u] = true;
 		remove stuff[u];
 	}
@@ -2379,7 +2455,7 @@ void main() {
 	m = create_matcher("clan_oldraidlogs\\.php\\?startrow=(\\d+)",page);
 	while(m.find()) {
 		page = m.replace_first("\"clan_raidlogs.php?oldLogs="+m.group(1)+"\"");
-		m.reset(page);  
+		m.reset(page);
 	}
 	if(FF contains "oldLogs") {
 		write(page);
