@@ -1910,7 +1910,7 @@ void formatDread(string show) {
 	foreach area in $strings[DreadWoods, DreadVillage, DreadCastle] if(data[".dtotal",area,".total"]>0)write("<th class=\""+area+"I\">"+area.expand()+"</th>");
 	write("<th class=\"TSI\">Totals</th>");
 	boolean customTotals = false;
-	foreach att in $strings[defeats] if(options["dread."+att] == "n")customTotals = true;
+	foreach att in $strings[defeats,noncombats] if(options["dread."+att] == "n")customTotals = true;
 	if(customTotals)write("<th class=\"TSI\">Adjusted Total</th>");
 	write("</tr>");
 	clear(odata);
@@ -1921,6 +1921,15 @@ void formatDread(string show) {
 		odata[count(odata)] = data[user];
 		odata[count(odata)-1,".name",user] = 1;
 		tmp = data[user,".dread",".total"];
+		if(options["dread.noncombats"] == "n"){
+            tmp = 0;
+            foreach area in $strings[DreadWoods, DreadVillage, DreadCastle]
+            {
+                tmp += data[user,area,".Kills"];
+                tmp += data[user,area,"Defeats"];
+                tmp += data[user,area,"!bossloss"];
+            }
+		}
 		if(options["dread.defeats"] == "n") foreach area in $strings[DreadWoods, DreadVillage, DreadCastle] {
 			tmp -= data[user,area,"Defeats"];
 			tmp -= data[user,area,"!bossloss"];
@@ -1941,6 +1950,16 @@ void formatDread(string show) {
 	write("<td class=\"TSI\">"+data[".dtotal",".dread",".total"]+"</td>");
 	if(customTotals) {
 		tmp = data[".dtotal",".dread",".total"];
+        
+		if(options["dread.noncombats"] == "n"){
+            tmp = 0;
+            foreach area in $strings[DreadWoods, DreadVillage, DreadCastle]
+            {
+                tmp += data[".dtotal",area,".Kills"];
+                tmp += data[".dtotal",area,"Defeats"];
+                tmp += data[".dtotal",area,"!bossloss"];
+            }
+		}
 		if(options["dread.defeats"] == "n") foreach area in $strings[DreadWoods, DreadVillage, DreadCastle] {
 			tmp -= data[".dtotal",area,"Defeats"];
 			tmp -= data[".dtotal",area,"!bossloss"];
@@ -2048,7 +2067,7 @@ void formatDread(string show) {
 	write("<form name=\"opts\" action=\""+__FILE__+"?submitOpts=1&dungeon=dread\" method=\"POST\"><table class=\"directory opts\"><tr>");
 	write("<td>Totals Table:</td><th><select name=\"dread.limitTable\"><option value=\"n\""+(options["dread.limitTable"] == "n"?" selected":"")+">Turns</option>");
 	write("<option value=\"on\""+(options["dread.limitTable"] == "on"?" selected":"")+">Noncombats</option>"+"<option value=\"none\""+(options["dread.limitTable"] == "none"?" selected":"")+">Collapsed</option></select></th>");
-	write("<th>Count To Total:</th><td>Defeats <input type=\"checkbox\" name=\"dread.defeats\""+(options["dread.defeats"] == "on"?" checked=\"checked\"":"")+"></td>");
+	write("<th>Count To Total:</th><td>Non-Combats <input type=\"checkbox\" name=\"dread.noncombats\""+(options["dread.noncombats"] == "on"?" checked=\"checked\"":"")+"></td><td>Defeats <input type=\"checkbox\" name=\"dread.defeats\""+(options["dread.defeats"] == "on"?" checked=\"checked\"":"")+"></td>");
 	writeln("<th colspan=2>[<input class=\"submit\" type=\"submit\" value=\"Save\">]</th></tr></table></form></div>");
 }
 
@@ -2061,6 +2080,7 @@ void loadOptions() {
 	options["slime.defeats"] = "n";
 	options["haunted.defeats"] = "n";
 	options["dread.defeats"] = "n";
+	options["dread.noncombats"] = "n";
 	options["dread.limitTable"] = "n";
 	file_to_map("raidlog/options.txt",temp);
 	foreach oN,oV in temp options[oN] = oV;
