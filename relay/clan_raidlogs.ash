@@ -1928,6 +1928,7 @@ void formatDread(string show) {
                 tmp += data[user,area,".Kills"];
                 tmp += data[user,area,"Defeats"];
                 tmp += data[user,area,"!bossloss"];
+                tmp -= data[".dtotal",area,"!Boss"];
             }
 		}
 		if(options["dread.defeats"] == "n") foreach area in $strings[DreadWoods, DreadVillage, DreadCastle] {
@@ -1958,6 +1959,7 @@ void formatDread(string show) {
                 tmp += data[".dtotal",area,".Kills"];
                 tmp += data[".dtotal",area,"Defeats"];
                 tmp += data[".dtotal",area,"!bossloss"];
+                tmp -= data[".dtotal",area,"!Boss"];
             }
 		}
 		if(options["dread.defeats"] == "n") foreach area in $strings[DreadWoods, DreadVillage, DreadCastle] {
